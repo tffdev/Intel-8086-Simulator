@@ -1,27 +1,50 @@
-bits 16
+; Register-to-register
+mov si, bx
+mov dh, al
 
-mov ax, 0x2222
-mov bx, 0x4444
-mov cx, 0x6666
-mov dx, 0x8888
+; Source address calculation
+mov al, [bx + si]
+mov bx, [bp + di]
+mov dx, [bp]
 
-mov ss, ax
-mov ds, bx
-mov es, cx
+; Source address calculation plus 8-bit displacement
+mov ah, [bx + si + 4]
 
-mov al, 0x11
-mov bh, 0x33
-mov cl, 0x55
-mov dh, 0x77
+; Source address calculation plus 16-bit displacement
+mov al, [bx + si + 4999]
 
-mov ah, bl
-mov cl, dh
+; Dest address calculation
+mov [bx + di], cx
+mov [bp + si], cl
+mov [bp], ch
 
-mov ss, ax
-mov ds, bx
-mov es, cx
+; 8-bit immediate-to-register
+mov cl, 12
+mov ch, -12
 
-mov sp, ss
-mov bp, ds
-mov si, es
-mov di, dx
+; Signed displacements
+mov ax, [bx + di - 37]
+mov [si - 300], cx
+mov dx, [bx - 32]
+
+; 16-bit immediate-to-register
+mov cx, 12
+mov cx, -12
+mov dx, 3948
+mov dx, -3948
+
+; Direct address
+mov bp, [5]
+mov bx, [3458]
+
+; Memory-to-accumulator test
+mov ax, [2555]
+mov ax, [16]
+
+; Accumulator-to-memory test
+mov [2554], ax
+mov [15], ax
+
+; Explicit sizes
+mov [bp + di], byte 7
+mov [di + 901], word 347
