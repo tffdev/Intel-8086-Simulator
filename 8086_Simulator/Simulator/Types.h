@@ -172,7 +172,7 @@ struct Buffer {
 	int size;
 };
 
-struct ParseContext {
+struct DecodeContext {
 	int bp;
 	byte* buffer;
 };
