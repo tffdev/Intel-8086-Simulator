@@ -65,6 +65,17 @@ const char* String::c_str() const {
 	return data;
 }
 
+bool String::Equals(const char* other) {
+	int i = 0;
+	while (data[i] != '\0' && other[i] != '\0') {
+		if (data[i] != other[i]) {
+			return false;
+		}
+		i++;
+	}
+	return data[i] == '\0' && other[i] == '\0';
+}
+
 String String::Format(String format, ...) {
 	va_list args;
 	va_start(args, format);
