@@ -1,3 +1,5 @@
-﻿  Main.cpp
-C:\Users\danie\Desktop\8086\8086_Simulator\Simulator\Main.cpp(91): warning C4715: 'SRToSegmentRegister': not all control paths return a value
+﻿  DecoderAlternate.cpp
+  Main.cpp
+  Generating Code...
+C:\Users\danie\Desktop\8086\8086_Simulator\Simulator\DecoderAlternate.cpp(19): warning C4715: 'SRToSegmentRegister': not all control paths return a value
   Simulator.vcxproj -> C:\Users\danie\Desktop\8086\8086_Simulator\x64\Debug\Simulator.exe

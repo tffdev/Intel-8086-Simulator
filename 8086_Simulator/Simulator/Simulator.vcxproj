@@ -127,11 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DecoderAlternate.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="String.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DecoderAlternate.h" />
     <ClInclude Include="String.h" />
+    <ClInclude Include="Types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

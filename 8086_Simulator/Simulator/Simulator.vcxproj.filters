@@ -21,10 +21,19 @@
     <ClCompile Include="String.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DecoderAlternate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="String.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Types.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DecoderAlternate.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
