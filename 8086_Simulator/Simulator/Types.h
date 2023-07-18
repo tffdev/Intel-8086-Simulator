@@ -1,4 +1,5 @@
 #pragma once
+#include "String.h"
 
 typedef unsigned char byte;
 typedef unsigned short word;
@@ -51,7 +52,9 @@ enum class Register : int {
 	// Segment Registers
 	CS, DS, SS, ES,
 	// Instruction Pointer and Flags
-	IP, FLAGS
+	IP, FLAGS,
+
+	INVALID
 };
 
 //----------------------------------------------
@@ -104,24 +107,6 @@ enum class OpCode {
 	JUMP_ON_CX_ZERO,
 };
 
-enum OpFlag : int {
-	NONE = 0,
-	MOD = 1 << 0,
-	REG = 1 << 1,
-	REGMEM = 1 << 2,
-	W = 1 << 3,
-	D = 1 << 4,
-	S = 1 << 5,
-	V = 1 << 6,
-	SEGREG = 1 << 7,
-	ONE_BYTE_OP = 1 << 8,
-	W_IN_FIRSTBYTE = 1 << 9,
-	REG_IN_FIRSTBYTE = 1 << 10,
-	HAS_DATA = 1 << 11,
-	HAS_ADDR = 1 << 12,
-	HAS_IP8 = 1 << 13,
-};
-
 //----------------------------------------------
 // EffectiveAddress
 //----------------------------------------------
@@ -134,20 +119,22 @@ enum class EffectiveAddress {
 	DI,
 	BP,
 	BX,
-	DIRECT_ADDRESS
+	DIRECT_ADDRESS,
+	INVALID
 };
 
 //----------------------------------------------
 // Operation helpers
 //----------------------------------------------
 enum class MoveMode {
-	Register,
-	Memory,
+	REGISTER,
+	MEMORY,
 };
 
 enum class ExplicitDataSize {
-	Byte,
-	Word
+	NONE,
+	BYTE,
+	WORD
 };
 
 struct RegMem {
@@ -155,6 +142,40 @@ struct RegMem {
 	Register reg;
 	EffectiveAddress effectiveAddress;
 	int memoryOffset;
+};
+
+struct Address {
+	EffectiveAddress effectiveAddress = EffectiveAddress::INVALID;
+	int memoryOffset = 0;
+};
+
+struct Operand {
+	enum class Type {
+		REGISTER,
+		MEMORY_LOC,
+		IMMEDIATE,
+	};
+	Type opType;
+	union {
+		Register reg = Register::INVALID;
+		Address mem;
+		struct {
+			word immediate;
+			ExplicitDataSize dataSize;
+		};
+	};
+};
+
+struct NewInstruction {
+	OpCode opCode;
+	union {
+		struct {
+			Operand source;
+			Operand dest;
+		};
+		int relativeJump;
+	};
+	String nameStr;
 };
 
 // One instruction fits all
@@ -175,4 +196,5 @@ struct Buffer {
 struct DecodeContext {
 	int bp;
 	byte* buffer;
+	int instructionCount;
 };

@@ -127,13 +127,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DecoderAlternate.cpp" />
+    <ClCompile Include="Decoder.cpp" />
+    <ClCompile Include="DecoderYanderedev.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="String.cpp" />
+    <ClCompile Include="StringifyTypes.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DecoderAlternate.h" />
+    <ClInclude Include="Decoder.h" />
+    <ClInclude Include="DecoderYanderedev.h" />
     <ClInclude Include="String.h" />
+    <ClInclude Include="StringifyTypes.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

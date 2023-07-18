@@ -38,6 +38,10 @@ void String::Set(String other) {
 	(*refCount)++;
 }
 
+void String::operator=(const String& other) {
+	this->Set(other);
+}
+
 String::String(const String& other) {
 	data = other.data;
 	length = other.length;

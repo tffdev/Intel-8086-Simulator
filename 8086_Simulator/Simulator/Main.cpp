@@ -21,7 +21,9 @@ TODO:
 #include <stdio.h>
 #include "String.h"
 #include "Types.h"
-#include "DecoderAlternate.h"
+#include "Decoder.h"
+#include "StringifyTypes.h"
+#include "DecoderYanderedev.h"
 
 //----------------------------------------------
 // Testing stuff
@@ -49,32 +51,6 @@ Buffer LoadBufferFromFile(String filename) {
 	return { buffer, bufferSize };
 }
 
-//----------------------------------------------
-// Main
-//----------------------------------------------
-void Decompile(Buffer& buffer) {
-	printf(";Executable read successfully\n");
-	printf(";Size: %d\n", buffer.size);
-	printf(";Decompiled instructions: \n");
-	printf("bits 16\n");
-
-	// Print-decode buffer
-	DecodeContext ctx;
-	ctx.bp = 0;
-	ctx.buffer = buffer.data;
-	while(ctx.bp < buffer.size)
-	{
-		Instruction inst{};
-		bool success = DecodeInstruction(ctx, inst);
-		if (!success) {
-			return;
-		}
-		else {
-			printf("successfully decoded instruction: mov %s, %s\n", RegMemToString(inst.dest).c_str(), RegMemToString(inst.source).c_str());
-		}
-	}
-}
-
 int main(int argc, char* argv[]) {
 	// Parse command line arguments
 	if (argc < 2) {
@@ -83,7 +59,9 @@ int main(int argc, char* argv[]) {
 	}
 
 	Buffer buffer = LoadBufferFromFile(argv[1]);
-	Decompile(buffer);
+	//Decompile(buffer);
+	DecoderYanDev::Decompile(buffer);
+	
 	return 0;
 }
 
