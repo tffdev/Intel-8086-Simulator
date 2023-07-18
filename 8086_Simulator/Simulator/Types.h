@@ -126,22 +126,10 @@ enum class EffectiveAddress {
 //----------------------------------------------
 // Operation helpers
 //----------------------------------------------
-enum class MoveMode {
-	REGISTER,
-	MEMORY,
-};
-
 enum class ExplicitDataSize {
 	NONE,
 	BYTE,
 	WORD
-};
-
-struct RegMem {
-	MoveMode type;
-	Register reg;
-	EffectiveAddress effectiveAddress;
-	int memoryOffset;
 };
 
 struct Address {
@@ -149,52 +137,7 @@ struct Address {
 	int memoryOffset = 0;
 };
 
-struct Operand {
-	enum class Type {
-		REGISTER,
-		MEMORY_LOC,
-		IMMEDIATE,
-	};
-	Type opType;
-	union {
-		Register reg = Register::INVALID;
-		Address mem;
-		struct {
-			word immediate;
-			ExplicitDataSize dataSize;
-		};
-	};
-};
-
-struct NewInstruction {
-	OpCode opCode;
-	union {
-		struct {
-			Operand source;
-			Operand dest;
-		};
-		int relativeJump;
-	};
-	String nameStr;
-};
-
-// One instruction fits all
-struct Instruction {
-	OpCode inst;
-	RegMem source;
-	RegMem dest;
-	word immediate;
-	ExplicitDataSize dataSize;
-	int relativeJump;
-};
-
 struct Buffer {
 	byte* data;
 	int size;
-};
-
-struct DecodeContext {
-	int bp;
-	byte* buffer;
-	int instructionCount;
 };

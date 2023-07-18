@@ -21,9 +21,8 @@ TODO:
 #include <stdio.h>
 #include "String.h"
 #include "Types.h"
-#include "Decoder.h"
 #include "StringifyTypes.h"
-#include "DecoderYanderedev.h"
+#include "Decoder.h"
 
 //----------------------------------------------
 // Testing stuff
@@ -59,8 +58,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	Buffer buffer = LoadBufferFromFile(argv[1]);
-	//Decompile(buffer);
-	DecoderYanDev::Decompile(buffer);
+	Decoder::Decompile(buffer);
 	
 	return 0;
 }

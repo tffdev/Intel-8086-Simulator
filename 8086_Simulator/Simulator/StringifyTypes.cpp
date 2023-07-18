@@ -66,12 +66,3 @@ String DataSizeToString(ExplicitDataSize s) {
 		return "word ";
 	}
 }
-
-String RegMemToString(RegMem& r) {
-	if (r.type == MoveMode::REGISTER) {
-		return RegisterToString(r.reg);
-	}
-	else {
-		return EffectiveAddressWithOffsetToString(r.effectiveAddress, r.memoryOffset);
-	}
-}
