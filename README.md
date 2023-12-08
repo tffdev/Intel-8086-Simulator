@@ -2,7 +2,7 @@
 
 ![](https://github.com/tffdev/Intel-8086-Simulator/blob/master/Assets/simulator.gif?raw=true)
 
-As an extension of the homework from Casey Muratori's series on performance programming, I have developed a CPU simulator that supports a reduced instruction set.
+As a practical exercise to do alongside Casey Muratori's series on performance programming, I have developed a CPU simulator that supports a reduced instruction set.
 This simulator is capable of running a compiled executable or decompiling the executable back to x86 assembly on a 1-to-1 basis.
 The goal I set for myself was to make it render something visually impressive.
 
