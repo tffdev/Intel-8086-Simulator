@@ -1,6 +1,7 @@
 #pragma once
 #include "Types.h"
+#include "List.h"
 
 namespace Decoder {
-	void Decompile(Buffer& buffer);
+	List<InstructionGeneric> Decode(Buffer& buffer);
 }

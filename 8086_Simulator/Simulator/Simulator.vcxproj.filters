@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Raylib">
+      <UniqueIdentifier>{e2c1381a-bfea-4a77-a4db-076fbf80f1d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -27,6 +30,12 @@
     <ClCompile Include="Decoder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Executor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rlImgui\rlImGui.cpp">
+      <Filter>Source Files\Raylib</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="String.h">
@@ -39,6 +48,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Decoder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="List.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Executor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rlImgui\rlImGui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

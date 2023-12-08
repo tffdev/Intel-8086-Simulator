@@ -1,43 +1,9 @@
 #pragma once
 #include "String.h"
+#include "List.h"
 
 typedef unsigned char byte;
 typedef unsigned short word;
-
-//----------------------------------------------
-// CPU State
-//----------------------------------------------
-struct CPU {
-	CPU() {
-		this->memory = new byte[0xffff];
-		for (size_t i = 0; i < 14; i++) {
-			regsWide[i] = 0;
-		}
-	}
-
-	~CPU() {
-		delete[] memory;
-	}
-
-	// Stored in a union to let short and wide registers overlap
-	union {
-		word regsWide[14];
-		struct {
-			word ax, cx, dx, bx;
-			word sp, bp, si, di;
-			word cs, ds, ss, es;
-			word ip, flags;
-		};
-
-		byte regsShort[8];
-		struct {
-			byte al, ah, cl, ch, dl, dh, bl, bh;
-		};
-	};
-
-	// Memory 
-	byte* memory;
-};
 
 //----------------------------------------------
 // Registers
@@ -105,6 +71,9 @@ enum class OpCode {
 	LOOP_WHILE_ZERO,
 	LOOP_WHILE_NOT_ZERO,
 	JUMP_ON_CX_ZERO,
+
+	// Interrupts
+	INTERRUPT,
 };
 
 //----------------------------------------------
@@ -126,6 +95,14 @@ enum class EffectiveAddress {
 //----------------------------------------------
 // Operation helpers
 //----------------------------------------------
+struct Buffer {
+	byte* data;
+	int size;
+};
+
+//----------------------------------------------
+// Operations and data
+//----------------------------------------------
 enum class ExplicitDataSize {
 	NONE,
 	BYTE,
@@ -134,10 +111,99 @@ enum class ExplicitDataSize {
 
 struct Address {
 	EffectiveAddress effectiveAddress = EffectiveAddress::INVALID;
-	int memoryOffset = 0;
+	word memoryOffset = 0;
 };
 
-struct Buffer {
-	byte* data;
-	int size;
+struct Operand {
+	enum class Type {
+		NONE,
+		REGISTER,
+		MEMORY_LOC,
+		IMMEDIATE
+	};
+
+	Type type = Type::NONE;
+	ExplicitDataSize dataSize = ExplicitDataSize::NONE;
+	union {
+		Register reg = Register::INVALID;
+		Address mem;
+		word immediate;
+	};
+};
+
+enum InstructionType {
+	NONE,
+	MOVE,
+	ADD,
+	SUB,
+	COMPARE,
+	JUMP,
+	INTERRUPT,
+};
+
+struct InstructionMove {
+	Operand source;
+	Operand dest;
+};
+
+struct InstructionAdd {
+	Operand source;
+	Operand dest;
+};
+
+struct InstructionSub {
+	Operand source;
+	Operand dest;
+};
+
+struct InstructionCompare {
+	Operand source;
+	Operand dest;
+};
+
+struct InstructionJump {
+	enum Condition {
+		JumpOnEqualOrZero = 0b01110100,
+		JumpOnLess = 0b01111100,
+		JumpOnLessOrEqual = 0b01111110,
+		JumpOnBelow = 0b01110010,
+		JumpOnBelowOrEqual = 0b01110110,
+		JumpOnParity = 0b01111010,
+		JumpOnOverflow = 0b01110000,
+		JumpOnSign = 0b01111000,
+		JumpOnNotEqualOrZero = 0b01110101,
+		JumpOnGreaterOrEqual = 0b01111101,
+		JumpOnGreater = 0b01111111,
+		JumpOnAboveOrEqual = 0b01110011,
+		JumpOnAbove = 0b01110111,
+		JumpOnNotParity = 0b01111011,
+		JumpOnNotOverflow = 0b01110001,
+		JumpOnNotSign = 0b01111001,
+		Loop = 0b11100010,
+		LoopEqualOrZero = 0b11100001,
+		LoopNotEqualOrZero = 0b11100000,
+		JumpOnCXZero = 0b11100011,
+	};
+	Condition condition;
+	int byteOffset;
+	int byteLocation;
+	int instructionIndex;
+};
+
+struct InstructionInterrupt {
+	byte interruptNumber;
+};
+
+struct InstructionGeneric {
+	InstructionType type = InstructionType::NONE;
+	int index;
+	String asString;
+	union {
+		InstructionMove move{};
+		InstructionAdd add;
+		InstructionSub sub;
+		InstructionCompare compare;
+		InstructionJump jump;
+		InstructionInterrupt interrupt;
+	};
 };

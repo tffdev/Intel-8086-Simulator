@@ -6,14 +6,18 @@ public:
 	String(const char* str);
 	String(const String& other);
 	~String();
+	static String Format(String format, ...);
+
 	const char* c_str() const;
+	void operator=(const String& other);
+	
 	String Clone();
 	bool Equals(const char* other);
-	static String Format(String format, ...);
 	void Set(String str);
-	void operator=(const String& other);
+	
+	char* data;
+
 private:
 	int* refCount;
-	char* data;
 	int length;
 };

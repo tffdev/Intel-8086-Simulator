@@ -1,0 +1,7 @@
+﻿  Main.cpp
+C:\Users\danie\Desktop\8086_GH\8086_Simulator\Simulator\Main.cpp(76,53): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\danie\Desktop\8086_GH\8086_Simulator\Simulator\Main.cpp(76,39): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\danie\Desktop\8086_GH\8086_Simulator\Simulator\Main.cpp(158,25): warning C4018: '<': signed/unsigned mismatch
+  String.cpp
+  Generating Code...
+  Simulator.vcxproj -> C:\Users\danie\Desktop\8086_GH\8086_Simulator\Debug\Simulator.exe
