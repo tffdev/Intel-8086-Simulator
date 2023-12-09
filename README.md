@@ -2,9 +2,9 @@
 
 ![](https://github.com/tffdev/Intel-8086-Simulator/blob/master/Assets/simulator.gif?raw=true)
 
-As a practical exercise to do alongside Casey Muratori's series on performance programming, I have developed a CPU simulator that supports a reduced instruction set.
-This simulator is capable of running a compiled executable or decompiling the executable back to x86 assembly on a 1-to-1 basis.
-The goal I set for myself was to make it render something visually impressive.
+As a practical exercise to do alongside Casey Muratori's series on performance programming, I developed a CPU simulator that supports a reduced instruction set.
+This simulator is capable of running a compiled executable or decompiling the executable back to x86 assembly.
+The goal I set for myself was to make it render something to a small framebuffer.
 
 # Features
 This simulator supports a reduced instruction x86 set. Here are the following instructions this simulator supports:
@@ -26,7 +26,7 @@ This program currently runs exclusively as a UI. To run a program, you should co
 sure you've only used the reduced instruction set, and run the program in the simulator using this arg syntax:
 
 ```
-./8086 program.asm
+8086_Simulator.exe program.asm
 ```
 
 # Testing
@@ -34,4 +34,4 @@ This simulator is tested using an `.asm` file which contains all supported instr
 `run_tests.bat` compiles `Testing/full_test_suite.asm` using nasm, loads the binary into the simulator, and saves out the decompilation.
 It then re-compiles this decompilation using `nasm` and then compares the original binary to the new binary created from the decompilation.
 
-We know if this simulator is made to spec if the two compilations produce completely identical binary.
+We know if this simulator's decompiler works well if the two compilations produce completely identical binary.
