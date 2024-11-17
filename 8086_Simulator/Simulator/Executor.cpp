@@ -209,6 +209,7 @@ bool CheckOverflowNegative(signed short a, signed short b) {
 
 bool CPU::ShouldJump(InstructionJump::Condition condition) {
 	switch (condition) {
+	case InstructionJump::Condition::JumpAlways: return true;
 	case InstructionJump::Condition::JumpOnEqualOrZero: return GetFlag(Flags::ZERO);
 	case InstructionJump::Condition::JumpOnLess: return GetFlag(Flags::SIGN);
 	case InstructionJump::Condition::JumpOnLessOrEqual: return GetFlag(Flags::SIGN) || GetFlag(Flags::ZERO);

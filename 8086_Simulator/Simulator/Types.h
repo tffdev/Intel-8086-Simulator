@@ -67,6 +67,7 @@ enum class OpCode {
 	JUMP_ON_NOT_PARITY,
 	JUMP_ON_NOT_OVERFLOW,
 	JUMP_ON_NOT_SIGN,
+	JUMP_ALWAYS_RELATIVE_WIDE,
 	LOOP_CX_TIMES,
 	LOOP_WHILE_ZERO,
 	LOOP_WHILE_NOT_ZERO,
@@ -163,6 +164,7 @@ struct InstructionCompare {
 
 struct InstructionJump {
 	enum Condition {
+		JumpAlways = 0b11101001,
 		JumpOnEqualOrZero = 0b01110100,
 		JumpOnLess = 0b01111100,
 		JumpOnLessOrEqual = 0b01111110,

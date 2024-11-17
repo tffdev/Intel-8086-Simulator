@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
 	InitWindow(800, 600, "8086 Simulator");
 	rlImGuiSetup(true);
 	bool running = false;
-	int executionsPerFrame = 1;
+	int executionsPerFrame = 100;
 
 	// Make new empty texture
 	Image renderImg = GenImageColor(64, 64, RED);
@@ -129,7 +129,7 @@ int main(int argc, char* argv[]) {
 			ImGui::Text("SS"); ImGui::NextColumn(); ImGui::Text("0x%04X", executor.ss); ImGui::NextColumn();
 			ImGui::Columns(1);
 
-			ImGui::Text("Flags: %s", FlagsToString(executor.flags));
+			ImGui::Text("Flags: %s", FlagsToString(executor.flags).c_str());
 
 			if (executor.halted) ImGui::Text("Halted");
 

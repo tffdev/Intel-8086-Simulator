@@ -30,6 +30,7 @@ namespace Decoder {
 		if ((code & 0b11111110) == 0b00111100) return OpCode::CMP_IMMEDIATE_WITH_ACCUMULATOR;
 		if (((code & 0b11111100) == 0b10000000) && (reg == 0b111)) return OpCode::CMP_IMMEDIATE_WITH_REGMEM;
 		// Jump instructions
+		if ((code & 0b11111111) == 0b11101001) return OpCode::JUMP_ALWAYS_RELATIVE_WIDE;
 		if ((code & 0b11111111) == 0b01110100) return OpCode::JUMP_ON_EQUAL_OR_ZERO;
 		if ((code & 0b11111111) == 0b01111100) return OpCode::JUMP_ON_LESS;
 		if ((code & 0b11111111) == 0b01111110) return OpCode::JUMP_ON_LESS_OR_EQUAL;
@@ -429,16 +430,16 @@ namespace Decoder {
 	//----------------------------------------------
 	// JUMP conditional
 	//----------------------------------------------
-	int OperationJumpConditionalParse(unsigned char* buffer, InstructionJump& jump, int myByte) {
+	int OperationJumpConditionalParse(unsigned char* buffer, InstructionJump& jump, int myByte, bool isWide = false) {
 		// Jump offsets are relative to the next instruction in bytes
 		jump.condition = (InstructionJump::Condition)buffer[0];
-		int jumpByteOffset = ParseImmediateData(&buffer[1], false);
+		int jumpByteOffset = ParseImmediateData(&buffer[1], isWide);
 
 		// This gives the byte, not the instruction index. We resolve this later in the decode function
 		jump.byteOffset = jumpByteOffset;
-		jump.byteLocation = myByte + jumpByteOffset + 2;
+		jump.byteLocation = myByte + jumpByteOffset + (isWide ? 3 : 2);
 		jump.instructionIndex = -1;
-		return 2;
+		return (isWide ? 3 : 2);
 	}
 
 	//----------------------------------------------
@@ -552,6 +553,7 @@ namespace Decoder {
 				instruction.type = InstructionType::COMPARE;
 				bytes = OperationCompareImmediateWithAccumulatorParse(&buffer.data[bp], instruction.compare);
 				break;
+			case OpCode::JUMP_ALWAYS_RELATIVE_WIDE:
 			case OpCode::JUMP_ON_EQUAL_OR_ZERO:
 			case OpCode::JUMP_ON_LESS:
 			case OpCode::JUMP_ON_LESS_OR_EQUAL:
@@ -572,8 +574,11 @@ namespace Decoder {
 			case OpCode::LOOP_WHILE_ZERO:
 			case OpCode::LOOP_WHILE_NOT_ZERO:
 			case OpCode::JUMP_ON_CX_ZERO:
-				instruction.type = InstructionType::JUMP;
-				bytes = OperationJumpConditionalParse(&buffer.data[bp], instruction.jump, bp);
+				{
+					instruction.type = InstructionType::JUMP;
+					bool isWide = (code == OpCode::JUMP_ALWAYS_RELATIVE_WIDE);
+					bytes = OperationJumpConditionalParse(&buffer.data[bp], instruction.jump, bp, isWide);
+				}
 				break;
 			case OpCode::INTERRUPT:
 				instruction.type = InstructionType::INTERRUPT;
