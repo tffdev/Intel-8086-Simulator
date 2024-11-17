@@ -1,6 +1,6 @@
 # Intel 8086 Simulator
 
-![](https://github.com/tffdev/Intel-8086-Simulator/blob/master/Assets/simulator.gif?raw=true)
+![](https://github.com/tffdev/Intel-8086-Simulator/blob/master/Assets/lowquality.gif?raw=true)
 
 As a practical exercise to do alongside Casey Muratori's series on performance programming, I developed a CPU simulator that supports a reduced instruction set.
 This simulator is capable of running a compiled executable or decompiling the executable back to x86 assembly.
@@ -11,7 +11,7 @@ This simulator supports a reduced instruction x86 set. Here are the following in
 
 **Arithmetic:** `mov`, `add`, `sub`, `cmp`
 
-**Branching:** `jnz`, `je`, `jl`, `jle`, `jb`, `jbe`, `jp`, `jo`, `js`, `jge`, `jg`, `jae`, `ja`, `jnp`, `jno`, `jns`, `loop`, `loope`, `loopne`, `jcxz`
+**Branching:** `jmp`, `jnz`, `je`, `jl`, `jle`, `jb`, `jbe`, `jp`, `jo`, `js`, `jge`, `jg`, `jae`, `ja`, `jnp`, `jno`, `jns`, `loop`, `loope`, `loopne`, `jcxz`
 
 You can `mov` to 16 bit registers (`AX`, `BX`, `CX`, `DX`) or use them as multiple 8 bit registers (`AL`, `AH`, `BL`, `BH`, etc.) 
 It supports moving to/from registers, memory, the accumulator, and segment registers.
